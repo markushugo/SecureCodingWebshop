@@ -231,12 +231,18 @@ public sealed class StoreRepository(SqlConnectionFactory factory)
         await command.ExecuteNonQueryAsync();
     }
 
+    /// <summary>Gør et deaktiveret produkt synligt i webshoppen igen.</summary>
+    public Task ActivateProductAsync(int id) => SetProductActiveAsync(id, true);
+
     /// <summary>Skjuler et produkt uden at slette tidligere ordredata.</summary>
-    public async Task DeactivateProductAsync(int id)
+    public Task DeactivateProductAsync(int id) => SetProductActiveAsync(id, false);
+
+    private async Task SetProductActiveAsync(int id, bool isActive)
     {
         await using var connection = factory.Create();
         await connection.OpenAsync();
-        await using var command = new SqlCommand("UPDATE Product SET IsActive = 0 WHERE Id = @id;", connection);
+        await using var command = new SqlCommand("UPDATE Product SET IsActive = @isActive WHERE Id = @id;", connection);
+        command.Parameters.Add("@isActive", SqlDbType.Bit).Value = isActive;
         command.Parameters.Add("@id", SqlDbType.Int).Value = id;
         await command.ExecuteNonQueryAsync();
     }

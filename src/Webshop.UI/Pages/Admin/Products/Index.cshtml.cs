@@ -13,6 +13,14 @@ public sealed class IndexModel(StoreRepository repository) : PageModel
     /// <summary>Henter både aktive og deaktiverede produkter.</summary>
     public async Task OnGetAsync() => Products = await repository.GetProductsAsync(null, true);
 
+    /// <summary>Aktiverer et produkt igen og registrerer handlingen i auditloggen.</summary>
+    public async Task<IActionResult> OnPostActivateAsync(int id)
+    {
+        await repository.ActivateProductAsync(id);
+        await repository.WriteAuditAsync(User.UserId(), "ProductActivated", true, $"ProductId={id}");
+        return RedirectToPage();
+    }
+
     /// <summary>Deaktiverer et produkt og registrerer handlingen i auditloggen.</summary>
     public async Task<IActionResult> OnPostDeactivateAsync(int id)
     {

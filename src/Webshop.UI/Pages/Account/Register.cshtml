@@ -6,10 +6,18 @@
 <form method="post">
     <div asp-validation-summary="ModelOnly"></div>
     <label asp-for="Input.Email"></label><input asp-for="Input.Email" /><span asp-validation-for="Input.Email"></span>
-    <label asp-for="Input.Password">Adgangskode</label><input asp-for="Input.Password" /><span asp-validation-for="Input.Password"></span>
-    @if (Model.PasswordScore is int score) { <p>Serverberegnet styrke: <strong>@score/100</strong> – @(score < 50 ? "svag" : score < 80 ? "rimelig" : "stærk")</p> }
-    <small>Mindst 12 tegn samt stort bogstav, lille bogstav, tal og specialtegn.</small>
+    <label asp-for="Input.Password">Adgangskode</label><input asp-for="Input.Password" aria-describedby="password-score password-requirements" /><span asp-validation-for="Input.Password"></span>
+    <div id="password-score">
+        <p aria-live="polite" aria-atomic="true">Passwordscore: <strong id="password-score-value">0/100</strong> – <span id="password-score-label">Skriv en adgangskode</span></p>
+        <meter id="password-score-meter" min="0" max="100" low="50" high="80" optimum="100" value="0" aria-label="Adgangskodens styrke">0/100</meter>
+    </div>
+    <noscript><p>Slå JavaScript til for at se passwordscoren, mens du skriver.</p></noscript>
+    <small id="password-requirements">Mindst 12 tegn samt stort bogstav, lille bogstav, tal og specialtegn. Scoren er vejledende; alle krav skal stadig være opfyldt.</small>
     <label asp-for="Input.ConfirmPassword">Gentag adgangskode</label><input asp-for="Input.ConfirmPassword" /><span asp-validation-for="Input.ConfirmPassword"></span>
     <button type="submit">Opret</button>
 </form>
 </div>
+
+@section Scripts {
+    <script src="~/js/password-score.js" asp-append-version="true" defer></script>
+}
