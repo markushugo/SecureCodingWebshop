@@ -1,0 +1,4 @@
+@page "{id:int}"
+@model Webshop.UI.Pages.Orders.DetailsModel
+@{ ViewData["Title"] = $"Ordre {Model.Order.Id}"; }
+<h1>Ordre #@Model.Order.Id</h1><p>@Model.Order.CreatedUtc.LocalDateTime.ToString("f")</p><table><thead><tr><th>Produkt</th><th>Pris</th><th>Antal</th><th>I alt</th></tr></thead><tbody>@foreach(var line in Model.Order.Lines){<tr><td>@line.ProductName</td><td>@line.UnitPrice.ToString("C")</td><td>@line.Quantity</td><td>@line.LineTotal.ToString("C")</td></tr>}</tbody></table><p class="price">Total: @Model.Order.Total.ToString("C")</p>

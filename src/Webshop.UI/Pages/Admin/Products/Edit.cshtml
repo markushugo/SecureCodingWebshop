@@ -1,0 +1,4 @@
+@page "{id:int?}"
+@model Webshop.UI.Pages.Admin.Products.EditModel
+@{ ViewData["Title"] = Model.Input.Id == 0 ? "Nyt produkt" : "Rediger produkt"; }
+<div class="panel"><h1>@ViewData["Title"]</h1><form method="post"><div asp-validation-summary="ModelOnly"></div><input type="hidden" asp-for="Input.Id"/><label asp-for="Input.Name">Navn</label><input asp-for="Input.Name"/><span asp-validation-for="Input.Name"></span><label asp-for="Input.Description">Beskrivelse</label><textarea asp-for="Input.Description"></textarea><span asp-validation-for="Input.Description"></span><label asp-for="Input.Price">Pris</label><input asp-for="Input.Price"/><span asp-validation-for="Input.Price"></span><label asp-for="Input.Stock">Lager</label><input asp-for="Input.Stock"/><span asp-validation-for="Input.Stock"></span><button>Gem</button></form></div>

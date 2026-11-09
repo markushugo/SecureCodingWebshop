@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Kurv";
+}
+
+<h2>Kurv</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Pris</th>
+                <th>Antal</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Product.Price * item.Quantity).ToString("C")</td>
+                    <td>
+                        <form method="post" asp-action="RemoveFromCart" asp-route-productId="@item.Product.Id">
+                            <button type="submit" class="btn btn-danger">Fjern</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total: @ViewBag.Total.ToString("C")
+    </div>
+
+    <a href="/Checkout" class="btn btn-success">Gå til kassen</a>
+}
+else
+{
+    <p>Din kurv er tom.</p>
+}

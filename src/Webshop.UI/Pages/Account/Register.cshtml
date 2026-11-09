@@ -1,0 +1,15 @@
+@page
+@model Webshop.UI.Pages.Account.RegisterModel
+@{ ViewData["Title"] = "Opret bruger"; }
+<div class="panel">
+<h1>Opret bruger</h1>
+<form method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <label asp-for="Input.Email"></label><input asp-for="Input.Email" /><span asp-validation-for="Input.Email"></span>
+    <label asp-for="Input.Password">Adgangskode</label><input asp-for="Input.Password" /><span asp-validation-for="Input.Password"></span>
+    @if (Model.PasswordScore is int score) { <p>Serverberegnet styrke: <strong>@score/100</strong> – @(score < 50 ? "svag" : score < 80 ? "rimelig" : "stærk")</p> }
+    <small>Mindst 12 tegn samt stort bogstav, lille bogstav, tal og specialtegn.</small>
+    <label asp-for="Input.ConfirmPassword">Gentag adgangskode</label><input asp-for="Input.ConfirmPassword" /><span asp-validation-for="Input.ConfirmPassword"></span>
+    <button type="submit">Opret</button>
+</form>
+</div>

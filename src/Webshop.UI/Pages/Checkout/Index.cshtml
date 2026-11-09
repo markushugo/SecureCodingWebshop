@@ -1,0 +1,6 @@
+@page
+@model Webshop.UI.Pages.Checkout.IndexModel
+@{ ViewData["Title"] = "Checkout"; }
+<h1>Checkout</h1><div asp-validation-summary="ModelOnly"></div>
+@if (Model.Lines.Count == 0) { <p>Kurven er tom.</p> }
+else { <div class="panel"><p></p><ul>@foreach(var line in Model.Lines){<li>@line.Quantity × @line.Name – @line.LineTotal.ToString("C")</li>}</ul><p class="price">Total: @Model.Total.ToString("C")</p><form method="post"><button>Bekræft køb</button></form></div> }

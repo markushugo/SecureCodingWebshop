@@ -1,0 +1,5 @@
+@page
+@model Webshop.UI.Pages.Orders.IndexModel
+@{ ViewData["Title"] = "Mine ordrer"; }
+<h1>Mine ordrer</h1>
+@if(Model.Orders.Count == 0){<p>Du har ingen ordrer endnu.</p>}else{<table><thead><tr><th>Ordre</th><th>Dato</th><th>Total</th><th></th></tr></thead><tbody>@foreach(var order in Model.Orders){<tr><td>#@order.Id</td><td>@order.CreatedUtc.LocalDateTime.ToString("g")</td><td>@order.Total.ToString("C")</td><td><a asp-page="Details" asp-route-id="@order.Id">Vis</a></td></tr>}</tbody></table>}

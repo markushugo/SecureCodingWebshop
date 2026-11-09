@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Ordrebekræftelse";
+}
+
+<h2>Ordrebekræftelse</h2>
+
+<p>Tak for din ordre! Din ordrenummer er @ViewBag.OrderId.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Pris</th>
+            <th>Antal</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price.ToString("C")</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Product.Price * item.Quantity).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="total">
+    Total: @ViewBag.Total.ToString("C")
+</div>

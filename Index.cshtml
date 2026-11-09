@@ -1,0 +1,27 @@
+@page
+@model Webshop.UI.Pages.IndexModel
+@{
+    ViewData["Title"] = "Forside";
+}
+
+<div class="container">
+    <h1>Velkommen til vores webshop</h1>
+    
+    @if (Model.Products.Any())
+    {
+        <div class="product-grid">
+            @foreach (var product in Model.Products)
+            {
+                <div class="product-card">
+                    <h2>@Html.DisplayFor(modelItem => product.Name)</h2>
+                    <p>@Html.DisplayFor(modelItem => product.Description)</p>
+                    <p><strong>Pris:</strong> @Html.DisplayFor(modelItem => product.Price) DKK</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Der er ikke nogle produkter tilgængelige.</p>
+    }
+</div>

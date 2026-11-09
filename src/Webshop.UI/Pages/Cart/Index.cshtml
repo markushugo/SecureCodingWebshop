@@ -1,0 +1,13 @@
+@page
+@model Webshop.UI.Pages.Cart.IndexModel
+@{ ViewData["Title"] = "Kurv"; }
+<h1>Kurv</h1>
+@if (Model.Lines.Count == 0) { <p>Kurven er tom.</p><a class="button" asp-page="/Index">Se produkter</a> }
+else
+{
+<table><thead><tr><th>Produkt</th><th>Pris</th><th>Antal</th><th>I alt</th><th></th></tr></thead><tbody>
+@foreach (var line in Model.Lines) {
+<tr><td>@line.Name</td><td>@line.UnitPrice.ToString("C")</td><td><form method="post" asp-page-handler="Update" class="actions"><input type="hidden" name="productId" value="@line.ProductId" /><input style="width:80px;margin:0" type="number" name="quantity" min="0" max="20" value="@line.Quantity" /><button>Opdater</button></form></td><td>@line.LineTotal.ToString("C")</td><td><form method="post" asp-page-handler="Remove"><input type="hidden" name="productId" value="@line.ProductId" /><button class="danger">Fjern</button></form></td></tr>
+}
+</tbody></table><p class="price">Total: @Model.Total.ToString("C")</p><div class="actions"><a class="button" asp-page="/Checkout/Index">Gå til checkout</a><form method="post" asp-page-handler="Clear"><button class="danger">Ryd kurv</button></form></div>
+}

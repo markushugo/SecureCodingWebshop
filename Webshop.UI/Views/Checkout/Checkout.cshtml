@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Kasse";
+}
+
+<h2>Kasse</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Pris</th>
+                <th>Antal</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Product.Price * item.Quantity).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total: @ViewBag.Total.ToString("C")
+    </div>
+
+    <form method="post" asp-action="CompleteCheckout">
+        <div class="form-group">
+            <label for="CardNumber">Kortnummer</label>
+            <input type="text" class="form-control" id="CardNumber" name="CardNumber" required />
+        </div>
+        <div class="form-group">
+            <label for="ExpiryDate">Udløbsdato</label>
+            <input type="text" class="form-control" id="ExpiryDate" name="ExpiryDate" required />
+        </div>
+        <div class="form-group">
+            <label for="CVV">CVV</label>
+            <input type="text" class="form-control" id="CVV" name="CVV" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Betal</button>
+    </form>
+}
+else
+{
+    <p>Din kurv er tom.</p>
+}

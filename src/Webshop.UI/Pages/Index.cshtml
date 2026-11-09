@@ -1,0 +1,29 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Produkter";
+}
+<h1>Produkter</h1>
+<form method="get" class="panel">
+    <label asp-for="Search">Søg efter navn</label>
+    <input asp-for="Search" maxlength="60" />
+    <span asp-validation-for="Search"></span>
+    <button type="submit">Søg</button>
+    <a class="button" asp-page="/Index">Ryd</a>
+</form>
+<div class="grid" style="margin-top:1rem">
+@foreach (var product in Model.Products)
+{
+    <article class="card">
+        <h2>@product.Name</h2>
+        <p>@product.Description</p>
+        <p class="price">@product.Price.ToString("C", new System.Globalization.CultureInfo("da-DK"))</p>
+        <p>@(product.Stock > 0 ? $"{product.Stock} på lager" : "Udsolgt")</p>
+        @if (product.Stock > 0)
+        {
+            <form method="post" asp-page-handler="Add"><input type="hidden" name="productId" value="@product.Id" /><button>Tilføj til kurv</button></form>
+        }
+    </article>
+}
+</div>
+@if (Model.Products.Count == 0) { <p>Ingen produkter matcher søgningen.</p> }

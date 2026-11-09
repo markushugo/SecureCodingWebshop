@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Webshop.Library/Webshop.Library.csproj" />
+  <Project Path="src/Webshop.UI/Webshop.UI.csproj" />
+</Solution>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] – Enkel Webshop</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="nav container">
+            <a class="brand" asp-page="/Index">Enkel Webshop</a>
+            <a asp-page="/Index">Produkter</a>
+            <a asp-page="/Cart/Index">Kurv</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-page="/Orders/Index">Mine ordrer</a>
+                <a asp-page="/Account/ChangePassword">Skift kode</a>
+                @if (User.IsInRole("Admin")) { <a asp-page="/Admin/Products/Index">Administration</a> }
+                <form method="post" asp-page="/Account/Logout"><button class="link-button" type="submit">Log ud</button></form>
+            }
+            else
+            {
+                <a asp-page="/Account/Login">Log ind</a>
+                <a asp-page="/Account/Register">Opret bruger</a>
+            }
+        </nav>
+    </header>
+    <main class="container">
+        @if (TempData["Message"] is string message) { <div class="notice">@message</div> }
+        @RenderBody()
+    </main>
+    <footer class="container"><small>Skoleprojekt – ingen rigtig betaling</small></footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
